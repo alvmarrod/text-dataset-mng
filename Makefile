@@ -47,4 +47,4 @@ build-docker:
 
 run-docker:
 	@echo "Running Docker container..."
-	@docker run -d --name ${CONTAINER_NAME} -v ${DATA_MOUNTPOINT}:/app/data -p ${EXTERNAL_SERVICE_PORT}:5000 ${IMAGE_NAME}:${IMAGE_VERSION}
+	@docker run -d --restart=unless-stopped --name ${CONTAINER_NAME} -v ${DATA_MOUNTPOINT}:/app/data -p ${EXTERNAL_SERVICE_PORT}:5000 ${IMAGE_NAME}:${IMAGE_VERSION}
