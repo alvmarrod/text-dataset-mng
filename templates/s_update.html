@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Sample Viewer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/s_update.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="header">
+        <h1>[Sample] {{ dataset.name }} - {{ sample.id }}</h1>
+        <form action="{{ url_for('view_dataset', id=dataset.id) }}" method="GET">
+            <button>Back to Dataset</button>
+        </form>
+    </div>
+
+    <div class="content">
+        <h2>Sample being edited</h2>
+        <div class="form">
+            <form action="{{ url_for('proc_update_sample', id=sample.id) }}" method="POST">
+                <label>Sample (text)</label>
+                <input type="text" name="s_text" value="{{ sample.text }}" class="semiwide" required>
+                <br>
+                <label>Label</label>
+                <select name="s_label" class="normal" required>
+                    <option value data-isdefault="true" {% if not sample.label %}selected{% endif %}>Select Label</option>
+                    {% for label in dataset.labels.split(',') %}
+                    <option value="{{ label.strip() }}" {% if label.strip() == sample.label %}selected{% endif %}>{{ label.strip() }}</option>
+                    {% endfor %}
+                </select>
+                <br><br>
+                <input type="hidden" name="ds_id" value="{{ dataset.id }}">
+                <button type="submit" class="paction">Update sample</button>
+            </form>
+        </div>
+
+    
+
+    </div>
+{% endblock %}

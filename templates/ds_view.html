@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Dataset Viewer</title>
+{% endblock %}
+
+{% block body %}
+    <div class="header">
+        <h1>[Dataset] {{ dataset.name }}</h1>
+        <form action="/" method="GET">
+            <button>Back to Datasets View</button>
+        </form>
+    </div>
+
+    <div class="content">
+        <div class="form">
+            <form action="{{ url_for('proc_create_sample') }}" method="POST">
+                <input type="text" name="s_text" placeholder="Sample text" required>
+                <select name="s_label" required>
+                    <option value data-isdefault="true">Select Label</option>
+                    {% for label in dataset.labels.split(',') %}
+                        <option value="{{ label.strip() }}">{{ label.strip() }}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" name="ds_id" value="{{ dataset.id }}">
+                <button type="submit" class="paction">Insert sample</button>
+            </form>
+        </div>
+        <h2>Samples</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sample ID</th>
+                    <th>Text</th>
+                    <th>Label</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Created by</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sample in samples %}
+                    <tr>
+                        <td>{{ sample.id }}</td>
+                        <td>{{ sample.text }}</td>
+                        <td>
+                            <b class="tag">{{ sample.label }}</b>
+                        </td>
+                        <td>{{ sample.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>{{ sample.updated_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>{{ sample.created_by }}</td>
+                        <td>
+                            <form action="{{ url_for('view_update_sample', id=sample.id) }}" method="GET">
+                                <button class="paction">Update</button>
+                            </form>
+                            <form action="{{ url_for('proc_delete_sample', id=sample.id) }}" method="GET">
+                                <button class="iaction">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

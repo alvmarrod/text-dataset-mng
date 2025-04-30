@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Dataset Viewer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ds_update.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="header">
+        <h1>[Dataset] {{dataset.name}}</h1>
+        <form action="/" method="GET">
+            <button>Back to Datasets View</button>
+        </form>
+    </div>
+
+    <div class="content">
+        <h2>Dataset being edited</h2>
+        <div class="form">
+            <form action="{{ url_for('proc_update_dataset', id=dataset.id)}}" method="POST">
+                <label>Dataset name</label>
+                <input type="text" name="ds_name" value="{{dataset.name}}" class="semiwide" required>
+                <br>
+                <label>Description</label>
+                <input type="text" name="ds_desc" value="{{dataset.description}}" class="wide">
+                <br>
+                <label>Labels</label>
+                <input type="text" name="ds_labels" value="{{dataset.labels}}" class="semiwide">
+                <br><br>
+                <button type="submit" class="paction">Update Dataset</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

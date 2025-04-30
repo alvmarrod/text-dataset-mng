@@ -1,0 +1,64 @@
+
+.iaction {
+    background-color: #c51d1d;
+    color: white;
+}
+
+.paction {
+    background-color: #1dc558;
+    color: white;
+}
+
+body {
+    align-items: center;
+    justify-content: center;
+}
+
+body div.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+table {
+    width: 80%;
+}
+
+table, th, td {
+    border-collapse: collapse;
+    border: 1px solid black ;
+}
+
+td {
+    text-align: center;
+}
+
+td button {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+}
+
+table thead {
+    background-color: #4873cf;
+    color: white;
+}
+
+table tbody tr:evennth-child(even) {
+    background-color: rgba(83, 130, 231, 0.765);
+}
+
+.form {
+    margin-top: 20px;
+}
+
+b.tag {
+    background-color: #4873cf;
+    color: white;
+    margin: 2px;
+    padding: 4px;
+    border-radius: 3px;
+    display: inline-block;
+}

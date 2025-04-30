@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Text Dataset Manager</title>
+{% endblock %}
+
+{% block body %}
+    <div class="header">
+        <h1>Datasets Management</h1>
+    </div>
+
+    <div class="content">
+        <div class="form">
+            <form action="/" method="POST">
+                <input type="text" name="ds_name" placeholder="Dataset Name" required>
+                <input type="text" name="ds_desc" placeholder="Description">
+                <input type="text" name="ds_labels" placeholder="Labels (comma separated)">
+                <button type="submit" class="paction">Create Dataset</button>
+            </form>
+        </div>
+        <h2>Available Datasets</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Samples</th>
+                    <th>Size</th>
+                    <th>Labels</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Created by</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dataset in datasets %}
+                    <tr>
+                        <td>{{ dataset.name }}</td>
+                        <td>{{ dataset.description }}</td>
+                        <td>{{ dataset.samples }}</td>
+                        <td>{{ dataset.size }}</td>
+                        <td>
+                            {% for label in dataset.labels.split(',') %}
+                                <b class="tag">{{ label.strip() }}</b>
+                            {% endfor %}
+                        </td>
+                        <td>{{ dataset.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>{{ dataset.updated_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>{{ dataset.created_by }}</td>
+                        <td>
+                            <form action="{{ url_for('view_dataset', id=dataset.id) }}" method="GET">
+                                <button class="paction">View</button>
+                            </form>
+                            <form action="{{ url_for('view_update_dataset', id=dataset.id) }}" method="GET">
+                                <button class="paction">Update</button>
+                            </form>
+                            <form action="{{ url_for('proc_delete_dataset', id=dataset.id) }}" method="GET">
+                                <button class="iaction">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
